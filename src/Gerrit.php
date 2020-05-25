@@ -46,9 +46,7 @@ class Gerrit {
                 break;
             }
 
-            if($change->new){
-                $repositoryChanges[$change->repositoryName][] = $change;
-            }
+            $repositoryChanges[$change->repositoryName][] = $change;
         }
         
         $cache->write($this->changes[0]->id);
