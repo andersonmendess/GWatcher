@@ -33,7 +33,7 @@ class Gerrit {
                 continue;
             }
 
-            array_push($this->changes, new ChangeItem($change));
+            array_push($this->changes, $obj);
         }
 
     }
