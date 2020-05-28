@@ -4,8 +4,9 @@ class Gerrit {
 
     public Array $changes = [];
 
-    function __construct(Array $params, Bool $excludeDevices, Bool $excludeOld) 
+    function __construct(Array $params, Array $settings) 
     {
+        define('GR_BASE_URL', $settings['url']);
 
         $response = file_get_contents(
             GR_BASE_URL . "changes/?". http_build_query($params),
@@ -13,23 +14,16 @@ class Gerrit {
             stream_context_create(['http' => ['timeout' => 7]])
         );        
 
-        if($response == NULL){
-            throw new Exception("Response is NULL");
-        }
         $response = str_replace(")]}'","", $response); // idk why
         $response = json_decode($response, true);
-
-        if(count($response) == 0){
-            throw new Exception("There is no changes to continue");
-        }
 
         foreach($response as $change){
             $obj = new ChangeItem($change);
 
-            if($excludeDevices && !$obj->romside){
+            if(!$settings['devices'] && !$obj->romside){
                 continue;
             }
-            if($excludeOld && !$obj->new){
+            if(!$obj->new){
                 continue;
             }
 

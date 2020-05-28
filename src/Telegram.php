@@ -1,14 +1,13 @@
 <?php
 
 class Telegram {
-    private String $baseUrl;
+    private String $baseUrl = "https://api.telegram.org/bot";
     private String $token;
     private String $chatId;
 
-    function __construct() {
-        $this->baseUrl = TG_BASE_URL;
-        $this->token = TG_BOT_TOKEN;
-        $this->chatId = TG_CHAT_ID;
+    function __construct(Array $config) {
+        $this->token = $config['token'];
+        $this->chatId = $config['chat_id'];
     }
 
     public function sendMessage(String $message): void {

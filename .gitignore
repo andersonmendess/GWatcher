@@ -1,2 +1,3 @@
-configs.php
-cache
+lineage*
+lineage.php
+lineage.cache
