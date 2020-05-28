@@ -6,7 +6,7 @@ require_once "MessageBuilder.php";
 
 function main(Array $config): void {
     $gerrit = new Gerrit(
-        ["n" => 50, "q" => "status:merged -age:12h"],
+        ["n" => 50, "q" => "status:merged -age:2h"],
         $config['gerrit']
     );
 
