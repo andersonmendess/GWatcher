@@ -5,6 +5,6 @@ A Telegram bot for notifications about new commits merged from Gerrit Code Revie
 
 #### Active Channels
 1. [LineageOS GWatcher](https://t.me/lineageosgwatcher)
-2. [AOSPA GWatcher](https://t.me/aospagwatcher)
+2. [LineageOS with devices GWatcher](https://t.me/lineageoswdgwatcher)
 3. [AOSiP GWatcher](https://t.me/aosipgwatcher)
 4. [ArrowOS GWatcher](https://t.me/arrowosgwatcher)
