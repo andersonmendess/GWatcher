@@ -8,7 +8,11 @@ $config = [
     ],
     "gerrit" => [
         "url" => "https://review.lineageos.org/",
-        "devices" => false, // allow to push android_devices/kernel_* repos
+        "romsideChecker" => [
+            "enabled" => true,
+            "blacklist" => ['kernel', 'device'],
+            "whitelist" => ['qcom', 'sepolicy', 'lineage']
+        ],
     ],
     "cache" => "lineage.cache" // cache filename
 ];

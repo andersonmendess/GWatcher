@@ -4,12 +4,11 @@ class Gerrit {
 
     public Array $changes = [];
 
-    function __construct(Array $params, Array $settings) 
+    function __construct(Array $params, Array $config) 
     {
-        define('GR_BASE_URL', $settings['url']);
 
         $response = file_get_contents(
-            GR_BASE_URL . "changes/?". http_build_query($params),
+            $config['url'] . "changes/?". http_build_query($params),
             false,
             stream_context_create(['http' => ['timeout' => 7]])
         );        
@@ -18,9 +17,9 @@ class Gerrit {
         $response = json_decode($response, true);
 
         foreach($response as $change){
-            $obj = new ChangeItem($change);
+            $obj = new ChangeItem($change, $config);
 
-            if(!$settings['devices'] && !$obj->romside){
+            if(!$config['devices'] && !$obj->romside){
                 continue;
             }
             if(!$obj->new){
@@ -71,7 +70,7 @@ class ChangeItem {
     public String $changeUrl;
     public String $repoChangesUrl;
 
-    function __construct(Array $data) {
+    function __construct(Array $data, Array $config) {
         $this->id = $data['id'];
         $this->project = $data['project'];
         $this->branch = $data['branch'];
@@ -84,21 +83,30 @@ class ChangeItem {
         $this->submitted = $data['submitted'];
 
         $this->new = $this->isNewChange();
-        $this->romside = $this->romsideCheck();
+        $this->romside = $this->romsideCheck($config['romsideChecker']);
 
         $this->repositoryName = explode("/", $this->project)[1] ?? $this->project;
 
-        $this->changeUrl = GR_BASE_URL . "c/{$this->project}/+/{$this->number}";
-        $this->repoChangesUrl = GR_BASE_URL . "q/project:{$this->project}+merged";
+        $this->changeUrl = config['url'] . "c/{$this->project}/+/{$this->number}";
+        $this->repoChangesUrl = config['url'] . "q/project:{$this->project}+merged";
     }
 
-    private function romsideCheck(): Bool {
+    private function romsideCheck(Array $config): Bool {
+
+        if(!$config['enabled']){
+            return false;
+        }
+
         $paths = explode("_", $this->project);
 
-        $blackList = ['device', 'kernel'];
+        $blackList = $config['blacklist'];
+        $whiteList = $config['whitelist'];
     
         foreach($paths as $path){
             if(in_array($path, $blackList)){
+                if(in_array($path, $whiteList)){
+                    return true;
+                }
                 return false;
             }
         }
