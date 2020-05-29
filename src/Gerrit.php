@@ -19,7 +19,7 @@ class Gerrit {
         foreach($response as $change){
             $obj = new ChangeItem($change, $config);
 
-            if(!$config['devices'] && !$obj->romside){
+            if(!$obj->romside){
                 continue;
             }
             if(!$obj->new){
@@ -87,14 +87,14 @@ class ChangeItem {
 
         $this->repositoryName = explode("/", $this->project)[1] ?? $this->project;
 
-        $this->changeUrl = config['url'] . "c/{$this->project}/+/{$this->number}";
-        $this->repoChangesUrl = config['url'] . "q/project:{$this->project}+merged";
+        $this->changeUrl = $config['url'] . "c/{$this->project}/+/{$this->number}";
+        $this->repoChangesUrl = $config['url'] . "q/project:{$this->project}+merged";
     }
 
     private function romsideCheck(Array $config): Bool {
 
         if(!$config['enabled']){
-            return false;
+            return true;
         }
 
         $paths = explode("_", $this->project);

@@ -2,10 +2,10 @@
 
 abstract class MessageBuilder {
 
-    static public function build(String $repositoryName, Array $commits): String {
+    static public function build(String $repositoryName, Array $commits, Array $configs): String {
 
         $commitsCounter = count($commits);
-        $projectUrl = GR_BASE_URL . "q/project:{$repositoryName}+merged";
+        $projectUrl = $configs['url'] . "q/project:{$repositoryName}+merged";
 
         $message = "<i>$commitsCounter new ";
         $message .= $commitsCounter > 1 ? "commits" : "commit"; 

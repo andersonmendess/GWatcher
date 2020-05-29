@@ -20,7 +20,7 @@ function main(Array $config): void {
     $telegram = new Telegram($config['telegram']);
 
     foreach($gerrit->joinChangesPerRepository($cache) as $repositoryName => $commits){
-        $telegram->sendMessage(MessageBuilder::build($repositoryName, $commits));
+        $telegram->sendMessage(MessageBuilder::build($repositoryName, $commits, $config['gerrit']));
     }
 }
 
