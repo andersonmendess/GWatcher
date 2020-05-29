@@ -103,15 +103,18 @@ class ChangeItem {
         $blackList = $config['blacklist'];
         $whiteList = $config['whitelist'];
 
-        foreach($paths as $path){
-            if(in_array($path, $blackList)){
-                if(in_array($path, $whiteList)){
-                    return true;
-                }
+        foreach ($whiteList as $whited) {
+            if(in_array($whited, $paths)){
+                return true;
+            }
+        }
+
+        foreach ($blackList as $blacked) {
+            if(in_array($blacked, $paths)){
                 return false;
             }
         }
-    
+
         return true;
     }
 
