@@ -83,9 +83,10 @@ class ChangeItem {
         $this->submitted = $data['submitted'];
 
         $this->new = $this->isNewChange();
-        $this->romside = $this->romsideCheck($config['romsideChecker']);
 
         $this->repositoryName = explode("/", $this->project)[1] ?? $this->project;
+
+        $this->romside = $this->romsideCheck($config['romsideChecker']);
 
         $this->changeUrl = $config['url'] . "c/{$this->project}/+/{$this->number}";
         $this->repoChangesUrl = $config['url'] . "q/project:{$this->project}+merged";
@@ -97,11 +98,11 @@ class ChangeItem {
             return true;
         }
 
-        $paths = explode("_", $this->project);
+        $paths = explode("_", $this->repositoryName);
 
         $blackList = $config['blacklist'];
         $whiteList = $config['whitelist'];
-    
+
         foreach($paths as $path){
             if(in_array($path, $blackList)){
                 if(in_array($path, $whiteList)){
