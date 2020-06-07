@@ -2,10 +2,14 @@
 
 abstract class MessageBuilder {
 
-    static public function build(String $repositoryName, Array $commits, Array $configs): String {
+    static public function build(Array $commits, Array $configs): String {
 
         $commitsCounter = count($commits);
-        $projectUrl = $configs['url'] . "q/project:{$repositoryName}+merged";
+
+        $fullRepositoryName = $commits[0]->project;
+        $repositoryName = $commits[0]->repositoryName;
+
+        $projectUrl = $configs['url'] . "q/project:{$fullRepositoryName}+merged";
 
         $message = "<i>$commitsCounter new ";
         $message .= $commitsCounter > 1 ? "commits" : "commit"; 
