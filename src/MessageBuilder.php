@@ -9,7 +9,7 @@ abstract class MessageBuilder {
         $fullRepositoryName = $commits[0]->project;
         $repositoryName = $commits[0]->repositoryName;
 
-        $projectUrl = $configs['url'] . "q/project:{$fullRepositoryName}+merged";
+        $projectUrl = $configs['url'] . "q/project:{$fullRepositoryName}+status:merged";
 
         $message = "<i>$commitsCounter new ";
         $message .= $commitsCounter > 1 ? "commits" : "commit"; 
