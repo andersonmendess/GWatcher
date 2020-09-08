@@ -11,7 +11,6 @@ function main(Array $config): void {
     );
 
     if(empty($gerrit->changes)){
-        echo "No Changes detected! \nexiting...\n";
         return;
     }
     
@@ -25,9 +24,9 @@ function main(Array $config): void {
 }
 
 function runAsLoop(Array $config): void {
+    echo "GWatcher is running!\n";
     while (true) {
         main($config);
-        echo "Sleeping for 15 Minutes\n";
         sleep(15*60);
     }
 
